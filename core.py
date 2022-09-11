@@ -76,7 +76,7 @@ class TextParser():
 
 class model():
     def __init__(self, texts_path=None, path=None):
-        self.texts_path = path
+        self.texts_path = texts_path
         self.dataset = None
         self.model_dir = path if path != None else "mymodel.pkl"
         self.n = 2 # n-граммность модели (>4 плохо на практике так не делают)

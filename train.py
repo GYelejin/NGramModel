@@ -12,8 +12,8 @@ def ArgumentParser():
 args = ArgumentParser().parse_args()
 
 def train(input_dir, model_path):
-    model = core.model(input_dir, model_path)
+    model = core.model(texts_path=input_dir, path=model_path)
     model.fit()
 
 if __name__ == "__main__":
-   train( args.input_dir, args.model)
+    train(args.input_dir, args.model)

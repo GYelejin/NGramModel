@@ -9,11 +9,10 @@ def ArgumentParser():
                         help='путь к файлу, в который сохраняется модель.')
     return parser
 
-args = ArgumentParser().parse_args()
-
 def train(input_dir, model_path):
     model = core.model(texts_path=input_dir, path=model_path)
     model.fit()
 
 if __name__ == "__main__":
+    args = ArgumentParser().parse_args()
     train(args.input_dir, args.model)

@@ -97,7 +97,7 @@ class model():
                 variants = self.dataset.get(np.random.choice(list(self.dataset.keys()), 1)[0])
             model_pred = np.random.choice(list(variants.keys()), 1, p=list(variants.values()))[0]
             result.append(model_pred)
-            true_prefix = prefix[self.n:]
+            true_prefix = prefix[-self.n:]
 
         return " ".join(result)
 

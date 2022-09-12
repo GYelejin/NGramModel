@@ -5,6 +5,7 @@ import os
 import sys
 import numpy as np
 import core
+
 def ArgumentParser():
     parser = argparse.ArgumentParser(description='Process some integers.')
     parser.add_argument('--model', type=str, default="",
@@ -15,12 +16,11 @@ def ArgumentParser():
                         help='длина генерируемой последовательности.')
     return parser
 
-args = ArgumentParser().parse_args()
-
 def generate(model, prefix, length):
     model = core.model(model)
     model.load()
     print(model.predict(prefix, length))
 if __name__ == "__main__":
+    args = ArgumentParser().parse_args()
     generate(args.model, args.prefix, args.length)
     

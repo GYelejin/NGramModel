@@ -91,10 +91,7 @@ class model():
         
         for _ in range(length):
             hash_key = hash(tuple(true_prefix))
-            if self.dataset.get(hash_key) != None:
-                variants = self.dataset.get(hash_key)
-            else: 
-                variants = self.dataset.get(np.random.choice(list(self.dataset.keys()), 1)[0])
+            variants = self.dataset.get(hash_key) if self.dataset.get(hash_key) != None else self.dataset.get(np.random.choice(list(self.dataset.keys()), 1)[0])
             model_pred = np.random.choice(list(variants.keys()), 1, p=list(variants.values()))[0]
             result.append(model_pred)
             true_prefix = prefix[-self.n:]

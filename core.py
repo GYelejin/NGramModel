@@ -12,24 +12,25 @@ def anylyse_texts(iterable_texts, n = 2):
     pairs = []
     for iterable in iterable_texts:
         #create a list of n iters in group
-        iters = itertools.tee(iterable, n)
+        iters = itertools.tee(iterable, n+1)
         for i in range(1 , len(iters)):
             next(itertools.islice(iters[i], i-1, len(iterable)), None)
         #crete pairs from iterable groups
         for i in zip(*iters):
-            pairs.append((hash(i[:-1]), i[-1]))
+            pairs.append((i[:-1], i[-1]))
     
-
+    #print(pairs)
     #create a dictionary for each pair in group
     data = dict()
     for pair in pairs:
         key, value = pair
-        last_value = data.get(hash(key))
+        #print(key, value)
+        last_value = data.get(key)
         if last_value != None:
             last_value.append(value)
-            data.update({hash(key): last_value})
+            data.update({key: last_value})
         else:
-            data.update({hash(key): [value]})
+            data.update({key: [value]})
 
     #count objects and create probability
     final_dataset = dict()
@@ -87,14 +88,14 @@ class model():
 
     def predict(self, prefix='', length=10):
         result = prefix.split()
-        true_prefix = prefix.split()[self.n:]
+        true_prefix = prefix.split()[-self.n:]
         
         for _ in range(length):
-            hash_key = hash(tuple(true_prefix))
+            hash_key = tuple(true_prefix)
             variants = self.dataset.get(hash_key) if self.dataset.get(hash_key) != None else self.dataset.get(np.random.choice(list(self.dataset.keys()), 1)[0])
             model_pred = np.random.choice(list(variants.keys()), 1, p=list(variants.values()))[0]
             result.append(model_pred)
-            true_prefix = prefix[-self.n:]
+            true_prefix = result[-self.n:]
 
         return " ".join(result)
 
@@ -104,7 +105,8 @@ class model():
         print(f"Model saved at { self.model_dir}")
 
     def load(self):
-        print(self)
+        
         with open(self.model_dir, 'rb') as file:  # Загружаем модель
             self.dataset = pickle.load(file)
+        #print(self.dataset)
         print(f"Model loaded successfully from {self.model_dir}")

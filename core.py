@@ -9,7 +9,7 @@ from sys import stdin
 def anylyse_texts(iterable_texts, n = 2):
     # iterable_texts тексты в виде двойных массивов
     # n              выбор n-граммости модели
-    pairs = [
+    pairs = []
     for iterable in iterable_texts:
         #create a list of n iters in group
         iters = itertools.tee(iterable, n+1)

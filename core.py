@@ -4,7 +4,13 @@ import re
 import pickle
 import os
 import numpy as np
+import hashlib
 from sys import stdin
+
+
+def hash(word):
+    hashed_russian_word = int(hashlib.md5(word.encode('utf-8')).hexdigest(), 16) % (10 ** 8)
+    return hashed_russian_word
 
 def anylyse_texts(iterable_texts, n = 2):
     # iterable_texts тексты в виде двойных массивов
@@ -108,5 +114,7 @@ class model():
         
         with open(self.model_dir, 'rb') as file:  # Загружаем модель
             self.dataset = pickle.load(file)
+        #print(self.dataset)
+        print(f"Model loaded successfully from {self.model_dir}")
         #print(self.dataset)
         print(f"Model loaded successfully from {self.model_dir}")
